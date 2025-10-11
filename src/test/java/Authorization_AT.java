@@ -4,8 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,19 +12,13 @@ import java.time.Duration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class AuthorizationAT {
+public class Authorization_AT {
 
     private WebDriver driver;
 
     @BeforeEach
     public void setUp() {
-        EdgeOptions options = new EdgeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        driver = new EdgeDriver(options);
-        driver.manage().window().setPosition(new Point(0, 0));
-        driver.get(Constants.URL);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver = UsefulMethods.driverSetUp();
     }
 
     @RepeatedTest(1)
@@ -37,7 +29,7 @@ public class AuthorizationAT {
     public void successfulAuthorization() {
 
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, Constants.STANDARDUSER);
+        UsefulMethods.enterUsername(usernameField, Constants.STANDARD_USER);
 
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
@@ -57,7 +49,7 @@ public class AuthorizationAT {
     public void unsuccessfulAuthorization() {
 
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, Constants.LOCKEDOUTUSER);
+        UsefulMethods.enterUsername(usernameField, Constants.LOCKED_OUT_USER);
 
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
@@ -78,15 +70,13 @@ public class AuthorizationAT {
         String actualBorderPassword = passwordField.getCssValue("border-bottom-color");
 
         assertAll("Несколько проверок",
-                () -> assertThat(actualBackgroundErrorMessage).isEqualTo(Constants.BACKGROUNDCOLOR),
-                () -> assertThat(actualBorderUsername).isEqualTo(Constants.BACKGROUNDCOLOR),
-                () -> assertThat(actualBorderPassword).isEqualTo(Constants.BACKGROUNDCOLOR));
+                () -> assertThat(actualBackgroundErrorMessage).isEqualTo(Constants.BACKGROUND_COLOR),
+                () -> assertThat(actualBorderUsername).isEqualTo(Constants.BACKGROUND_COLOR),
+                () -> assertThat(actualBorderPassword).isEqualTo(Constants.BACKGROUND_COLOR));
     }
 
     @AfterEach
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        UsefulMethods.driverQuit(driver);
     }
 }

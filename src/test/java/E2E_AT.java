@@ -3,9 +3,9 @@ import helpers.UsefulMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,27 +19,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class E2E_AT {
+
     private WebDriver driver;
 
     @BeforeEach
     public void setUp() {
-        EdgeOptions options = new EdgeOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-        driver = new EdgeDriver(options);
-        driver.manage().window().setPosition(new Point(0, 0));
-        driver.get(Constants.URL);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver = UsefulMethods.driverSetUp();
     }
 
-    @RepeatedTest(1)
-    @DisplayName("standard_user")
+    @ParameterizedTest
+    @CsvSource({Constants.STANDARD_USER, Constants.PERFORMANCE_GLITCH_USER})
+    @DisplayName("Add to Cart")
     @Story("BS-E2E-01 Add to Cart")
     @Description("The user adds items to the shopping cart")
     @Tags({@Tag("E2E"), @Tag("BusinessAT"), @Tag("Positive")})
-    public void e2e_standard_user() {
+    public void e2e_standard_user(String username) {
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, Constants.STANDARDUSER);
+        UsefulMethods.enterUsername(usernameField, username);
 
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
@@ -66,9 +62,9 @@ public class E2E_AT {
 
         step("Нажать на кнопку 'Checkout'", () -> UsefulMethods.clickButton(driver, "checkout"));
 
-        step("Ввести First Name = " + Constants.firstName, () -> UsefulMethods.fillField(driver, "firstName", Constants.firstName));
-        step("Ввести Last Name = " + Constants.lastName, () -> UsefulMethods.fillField(driver, "lastName", Constants.lastName));
-        step("Ввести Postal Code = " + Constants.postalCode, () -> UsefulMethods.fillField(driver, "postalCode", Constants.postalCode));
+        step("Ввести First Name = " + Constants.FIRST_NAME, () -> UsefulMethods.fillField(driver, "firstName", Constants.FIRST_NAME));
+        step("Ввести Last Name = " + Constants.LAST_NAME, () -> UsefulMethods.fillField(driver, "lastName", Constants.LAST_NAME));
+        step("Ввести Postal Code = " + Constants.POSTAL_CODE, () -> UsefulMethods.fillField(driver, "postalCode", Constants.POSTAL_CODE));
 
         step("Нажать на кнопку 'Continue'", () -> driver.findElement(By.xpath("//input[@name='continue']")).click());
 
@@ -80,16 +76,14 @@ public class E2E_AT {
         String actualText = driver.findElement(By.xpath("//div[@class='complete-text']")).getText();
 
         assertAll("Несколько проверок",
-                () -> assertThat(actualShoppingCartBadge).isEqualTo(Constants.expectedShoppingCartBadge),
-                () -> assertThat(actualTotal).isEqualTo(Constants.expectedTotal),
-                () -> assertThat(actualHeader).isEqualTo(Constants.expectedHeader),
-                () -> assertThat(actualText).isEqualTo(Constants.expectedText));
+                () -> assertThat(actualShoppingCartBadge).isEqualTo(Constants.EXPECTED_SHOPPING_CART_BADGE),
+                () -> assertThat(actualTotal).isEqualTo(Constants.EXPECTED_TOTAL),
+                () -> assertThat(actualHeader).isEqualTo(Constants.EXPECTED_HEADER),
+                () -> assertThat(actualText).isEqualTo(Constants.EXPECTED_TEXT));
     }
 
     @AfterEach
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        UsefulMethods.driverQuit(driver);
     }
 }
