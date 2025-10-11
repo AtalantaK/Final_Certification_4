@@ -1,3 +1,4 @@
+import helpers.Constants;
 import helpers.UsefulMethods;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
@@ -9,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
