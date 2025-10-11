@@ -21,14 +21,27 @@ public class UsefulMethods {
     }
 
     public static void enterUsername(WebElement usernameField, String username) {
-        step("Enter username = " + username, () -> usernameField.sendKeys(username));
+        step("Ввести username = " + username, () -> usernameField.sendKeys(username));
     }
 
     public static void enterPassword(WebElement passwordField, String password) {
-        step("Enter password = " + password, () -> passwordField.sendKeys(password));
+        step("Ввести password = " + password, () -> passwordField.sendKeys(password));
     }
 
     public static void clickLogin(WebElement loginButton) {
-        step("Click on 'Login'", () -> loginButton.click());
+        step("Нажать на кнопку 'Login'", () -> loginButton.click());
+    }
+
+    public static WebElement findItemByName(WebDriver driver, String itemName) {
+        return driver.findElement(By.xpath("//div[text()='" + itemName + "']/../../../div[@class='pricebar']/button[text()='Add to cart']"));
+    }
+
+    public static void fillField(WebDriver driver, String fieldName, String value) {
+        driver.findElement(By.xpath("//input[@name='" + fieldName + "']"))
+                .sendKeys(value);
+    }
+
+    public static void clickButton(WebDriver driver, String buttonName) {
+        driver.findElement(By.xpath("//button[@name='" + buttonName + "']")).click();
     }
 }
