@@ -38,8 +38,12 @@ public class E2E_AT {
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, username);
 
+        UsefulMethods.makeScreeshot(driver);
+
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+
+        UsefulMethods.makeScreeshot(driver);
 
         WebElement loginButton = UsefulMethods.findLoginButton(driver);
         UsefulMethods.clickLogin(loginButton);
@@ -48,10 +52,13 @@ public class E2E_AT {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className("shopping_cart_link"))));
         //wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
 
+        UsefulMethods.makeScreeshot(driver);
+
         List<String> items = new ArrayList<>(Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie"));
 
         for (String item : items) {
             step("Добавить 1 товар '" + item + "' в корзину", () -> UsefulMethods.findItemByName(driver, item).click());
+            UsefulMethods.makeScreeshot(driver);
         }
 
         String actualShoppingCartBadge = driver.findElement(By.className("shopping_cart_badge")).getText();
@@ -59,29 +66,37 @@ public class E2E_AT {
 
         step("Перейти в корзину", () -> driver.findElement(By.className("shopping_cart_link")).click());
         //step("Перейти в корзину", () -> driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click());
+        UsefulMethods.makeScreeshot(driver);
 
         for (String item : items) {
             step("Товар '" + item + "' в корзине", () -> driver.findElement(By.xpath("//div[text()='" + item + "']")));
+            UsefulMethods.makeScreeshot(driver);
         }
 
         step("Нажать на кнопку 'Checkout'", () -> UsefulMethods.clickButton(driver, "checkout"));
+        UsefulMethods.makeScreeshot(driver);
 
         step("Ввести First Name = " + Constants.FIRST_NAME, () -> UsefulMethods.fillField(driver, "firstName", Constants.FIRST_NAME));
+        UsefulMethods.makeScreeshot(driver);
+
         step("Ввести Last Name = " + Constants.LAST_NAME, () -> UsefulMethods.fillField(driver, "lastName", Constants.LAST_NAME));
+        UsefulMethods.makeScreeshot(driver);
+
         step("Ввести Postal Code = " + Constants.POSTAL_CODE, () -> UsefulMethods.fillField(driver, "postalCode", Constants.POSTAL_CODE));
+        UsefulMethods.makeScreeshot(driver);
 
         step("Нажать на кнопку 'Continue'", () -> driver.findElement(By.xpath("//input[@name='continue']")).click());
+        UsefulMethods.makeScreeshot(driver);
 
         String actualTotal = driver.findElement(By.className("summary_total_label")).getText();
         //String actualTotal = driver.findElement(By.xpath("//div[@class='summary_total_label']")).getText();
 
         step("Нажать на кнопку 'Finish'", () -> UsefulMethods.clickButton(driver, "finish"));
+        UsefulMethods.makeScreeshot(driver);
 
         String actualHeader = driver.findElement(By.xpath("//h2[@class='complete-header']")).getText();
         String actualText = driver.findElement(By.className("complete-text")).getText();
         //String actualText = driver.findElement(By.xpath("//div[@class='complete-text']")).getText();
-
-        UsefulMethods.makeScreeshot(driver, "e2e_" + username);
 
         assertAll("Несколько проверок",
                 () -> assertThat(actualShoppingCartBadge).isEqualTo(Constants.EXPECTED_SHOPPING_CART_BADGE),

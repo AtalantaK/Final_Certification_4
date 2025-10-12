@@ -1,5 +1,7 @@
 package helpers;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -8,6 +10,8 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import javax.imageio.ImageIO;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -72,8 +76,15 @@ public class UsefulMethods {
         driver.findElement(By.xpath("//button[@name='" + buttonName + "']")).click();
     }
 
-    public static void makeScreeshot(WebDriver driver, String screenshotName) throws IOException {
+    public static void makeScreeshot(WebDriver driver) throws IOException {
         Screenshot screenshot = new AShot().takeScreenshot(driver);
-        ImageIO.write(screenshot.getImage(), "PNG", new File("src/test/java/screenshots/" + screenshotName + "_AR.png"));
+        //ImageIO.write(screenshot.getImage(), "PNG", new File("src/test/java/screenshots/" + screenshotName + "_AR.png"));
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(screenshot.getImage(), "PNG", baos);
+        byte[] screenshotBytes = baos.toByteArray();
+
+        // Прикрепляем скриншот к Allure отчету
+        step("Скриншот", () -> Allure.addAttachment("Актуальный результат", "image/png", new ByteArrayInputStream(screenshotBytes), ".png"));
     }
 }

@@ -37,8 +37,12 @@ public class Authorization_AT {
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, Constants.STANDARD_USER);
 
+        UsefulMethods.makeScreeshot(driver);
+
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+
+        UsefulMethods.makeScreeshot(driver);
 
         WebElement loginButton = UsefulMethods.findLoginButton(driver);
         UsefulMethods.clickLogin(loginButton);
@@ -47,7 +51,7 @@ public class Authorization_AT {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className("shopping_cart_link"))));
         //wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
 
-        UsefulMethods.makeScreeshot(driver, "successfulAuthorization");
+        UsefulMethods.makeScreeshot(driver);
     }
 
     @RepeatedTest(1)
@@ -60,8 +64,12 @@ public class Authorization_AT {
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, Constants.LOCKED_OUT_USER);
 
+        UsefulMethods.makeScreeshot(driver);
+
         WebElement passwordField = UsefulMethods.findPasswordField(driver);
         UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+
+        UsefulMethods.makeScreeshot(driver);
 
         WebElement loginButton = UsefulMethods.findLoginButton(driver);
         UsefulMethods.clickLogin(loginButton);
@@ -79,7 +87,7 @@ public class Authorization_AT {
         passwordField = driver.findElement(By.xpath("//input[@placeholder='Password']"));
         String actualBorderPassword = passwordField.getCssValue("border-bottom-color");
 
-        UsefulMethods.makeScreeshot(driver, "unsuccessfulAuthorization");
+        UsefulMethods.makeScreeshot(driver);
 
         assertAll("Несколько проверок",
                 () -> assertThat(actualBackgroundErrorMessage).isEqualTo(Constants.BACKGROUND_COLOR),
