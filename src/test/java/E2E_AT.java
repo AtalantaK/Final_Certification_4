@@ -44,7 +44,8 @@ public class E2E_AT {
         UsefulMethods.clickLogin(loginButton);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className("shopping_cart_link"))));
+        //wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
 
         List<String> items = new ArrayList<>(Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt", "Sauce Labs Onesie"));
 
@@ -52,9 +53,11 @@ public class E2E_AT {
             step("Добавить 1 товар '" + item + "' в корзину", () -> UsefulMethods.findItemByName(driver, item).click());
         }
 
-        String actualShoppingCartBadge = driver.findElement(By.xpath("//span[@class='shopping_cart_badge']")).getText();
+        String actualShoppingCartBadge = driver.findElement(By.className("shopping_cart_badge")).getText();
+        //String actualShoppingCartBadge = driver.findElement(By.xpath("//span[@class='shopping_cart_badge']")).getText();
 
-        step("Перейти в корзину", () -> driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click());
+        step("Перейти в корзину", () -> driver.findElement(By.className("shopping_cart_link")).click());
+        //step("Перейти в корзину", () -> driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click());
 
         for (String item : items) {
             step("Товар '" + item + "' в корзине", () -> driver.findElement(By.xpath("//div[text()='" + item + "']")));
@@ -68,12 +71,14 @@ public class E2E_AT {
 
         step("Нажать на кнопку 'Continue'", () -> driver.findElement(By.xpath("//input[@name='continue']")).click());
 
-        String actualTotal = driver.findElement(By.xpath("//div[@class='summary_total_label']")).getText();
+        String actualTotal = driver.findElement(By.className("summary_total_label")).getText();
+        //String actualTotal = driver.findElement(By.xpath("//div[@class='summary_total_label']")).getText();
 
         step("Нажать на кнопку 'Finish'", () -> UsefulMethods.clickButton(driver, "finish"));
 
         String actualHeader = driver.findElement(By.xpath("//h2[@class='complete-header']")).getText();
-        String actualText = driver.findElement(By.xpath("//div[@class='complete-text']")).getText();
+        String actualText = driver.findElement(By.className("complete-text")).getText();
+        //String actualText = driver.findElement(By.xpath("//div[@class='complete-text']")).getText();
 
         assertAll("Несколько проверок",
                 () -> assertThat(actualShoppingCartBadge).isEqualTo(Constants.EXPECTED_SHOPPING_CART_BADGE),

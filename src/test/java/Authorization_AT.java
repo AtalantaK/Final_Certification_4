@@ -38,7 +38,8 @@ public class Authorization_AT {
         UsefulMethods.clickLogin(loginButton);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className("shopping_cart_link"))));
+        //wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
     }
 
     @RepeatedTest(1)
@@ -60,7 +61,8 @@ public class Authorization_AT {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//h3[text()='Epic sadface: Sorry, this user has been locked out.']"))));
 
-        WebElement errorMessage = driver.findElement(By.xpath("//div[@class='error-message-container error']"));
+        WebElement errorMessage = driver.findElement(By.className("error-message-container"));
+        //WebElement errorMessage = driver.findElement(By.xpath("//div[@class='error-message-container error']"));
         String actualBackgroundErrorMessage = errorMessage.getCssValue("background-color");
 
         usernameField = UsefulMethods.findUsernameField(driver);
