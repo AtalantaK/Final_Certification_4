@@ -6,7 +6,13 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +32,7 @@ public class Authorization_AT {
     @Story("BS-SM-01 Security matrix")
     @Description("Successful authorization as User = standard_user")
     @Tags({@Tag("Authorization"), @Tag("Smoke"), @Tag("Security_matrix"), @Tag("Positive")})
-    public void successfulAuthorization() {
+    public void successfulAuthorization() throws IOException {
 
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, Constants.STANDARD_USER);
@@ -40,6 +46,8 @@ public class Authorization_AT {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.className("shopping_cart_link"))));
         //wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@class='shopping_cart_link']"))));
+
+        UsefulMethods.makeScreeshot(driver, "successfulAuthorization");
     }
 
     @RepeatedTest(1)
@@ -47,7 +55,7 @@ public class Authorization_AT {
     @Story("BS-SM-01 Security matrix")
     @Description("Unsuccessful authorization as User = locked_out_user")
     @Tags({@Tag("Authorization"), @Tag("Smoke"), @Tag("Security_matrix"), @Tag("Negative")})
-    public void unsuccessfulAuthorization() {
+    public void unsuccessfulAuthorization() throws IOException {
 
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, Constants.LOCKED_OUT_USER);
@@ -70,6 +78,8 @@ public class Authorization_AT {
 
         passwordField = driver.findElement(By.xpath("//input[@placeholder='Password']"));
         String actualBorderPassword = passwordField.getCssValue("border-bottom-color");
+
+        UsefulMethods.makeScreeshot(driver, "unsuccessfulAuthorization");
 
         assertAll("Несколько проверок",
                 () -> assertThat(actualBackgroundErrorMessage).isEqualTo(Constants.BACKGROUND_COLOR),

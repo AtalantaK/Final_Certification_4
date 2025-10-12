@@ -9,6 +9,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class E2E_AT {
     @Story("BS-E2E-01 Add to Cart")
     @Description("The user adds items to the shopping cart")
     @Tags({@Tag("E2E"), @Tag("BusinessAT"), @Tag("Positive")})
-    public void e2e_standard_user(String username) {
+    public void e2e_user(String username) throws IOException {
         WebElement usernameField = UsefulMethods.findUsernameField(driver);
         UsefulMethods.enterUsername(usernameField, username);
 
@@ -79,6 +80,8 @@ public class E2E_AT {
         String actualHeader = driver.findElement(By.xpath("//h2[@class='complete-header']")).getText();
         String actualText = driver.findElement(By.className("complete-text")).getText();
         //String actualText = driver.findElement(By.xpath("//div[@class='complete-text']")).getText();
+
+        UsefulMethods.makeScreeshot(driver, "e2e_" + username);
 
         assertAll("Несколько проверок",
                 () -> assertThat(actualShoppingCartBadge).isEqualTo(Constants.EXPECTED_SHOPPING_CART_BADGE),
