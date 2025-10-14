@@ -43,7 +43,7 @@ jobs:
       - name: Generate Allure HTML report
         run: |
           ls -la allure-results
-          allure generate allure-results --clean -o target/allure-report
+          allure generate target/allure-results --clean -o target/allure-report
 
         # Загрузка отчета как артефакт
       - name: Upload Allure report
