@@ -20,6 +20,9 @@ public class UsefulMethods {
 
     public static WebDriver driverSetUp() {
         EdgeOptions options = new EdgeOptions();
+        options.addArguments("--headless");  // Включаем headless режим
+        options.addArguments("--disable-gpu"); // Для Windows, чтобы избежать ошибок
+        options.addArguments("--no-sandbox");  // Для CI/CD, если нужно
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 
         WebDriver driver = new EdgeDriver(options);
@@ -46,7 +49,8 @@ public class UsefulMethods {
     }
 
     public static void enterValue(WebElement webElement, String fieldName) {
-        if (Objects.equals(fieldName, Constants.PASSWORD)) step("Ввести пароль = " + fieldName, () -> webElement.sendKeys(fieldName));
+        if (Objects.equals(fieldName, Constants.PASSWORD))
+            step("Ввести пароль = " + fieldName, () -> webElement.sendKeys(fieldName));
         else step("Ввести логин = " + fieldName, () -> webElement.sendKeys(fieldName));
     }
 
