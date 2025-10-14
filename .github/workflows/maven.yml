@@ -29,3 +29,12 @@ jobs:
         cache: maven
     - name: Run tests
       run: mvn clean test
+    
+    - name: Generate Allure report
+      run: mvn allure:report
+
+    - name: Upload Allure report as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: target/site/allure-maven-plugin
