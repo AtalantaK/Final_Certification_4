@@ -42,7 +42,7 @@ jobs:
         # Генерация HTML-отчета из результатов
       - name: Generate Allure HTML report
         run: |
-          ls -la allure-results
+          ls -la target/allure-results
           allure generate target/allure-results --clean -o target/allure-report
 
         # Загрузка отчета как артефакт
