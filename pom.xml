@@ -113,6 +113,20 @@
                     </includes>
                 </configuration>
             </plugin>
+            <!-- Плагин для генерации Allure отчетов -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.16.1</version> <!-- Используйте актуальную версию -->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal> &lt;!&ndash; Генерация отчета &ndash;&gt;-->
+<!--                            <goal>serve</goal> &lt;!&ndash; Для локального сервера (если нужно) &ndash;&gt;-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+            </plugin>
         </plugins>
     </build>
 
