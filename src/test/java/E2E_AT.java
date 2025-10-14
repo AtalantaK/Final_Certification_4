@@ -35,13 +35,13 @@ public class E2E_AT {
     @Description("The user adds items to the shopping cart")
     @Tags({@Tag("E2E"), @Tag("BusinessAT"), @Tag("Positive")})
     public void e2e_user(String username) throws IOException {
-        WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, username);
+        WebElement usernameField = UsefulMethods.findByPlaceholder(driver, "Username");
+        UsefulMethods.enterValue(usernameField, username);
 
         UsefulMethods.makeScreeshot(driver);
 
-        WebElement passwordField = UsefulMethods.findPasswordField(driver);
-        UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+        WebElement passwordField = UsefulMethods.findByPlaceholder(driver, "Password");
+        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
 
         UsefulMethods.makeScreeshot(driver);
 

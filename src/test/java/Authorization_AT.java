@@ -6,12 +6,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
@@ -34,13 +29,13 @@ public class Authorization_AT {
     @Tags({@Tag("Authorization"), @Tag("Smoke"), @Tag("Security_matrix"), @Tag("Positive")})
     public void successfulAuthorization() throws IOException {
 
-        WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, Constants.STANDARD_USER);
+        WebElement usernameField = UsefulMethods.findByPlaceholder(driver, "Username");
+        UsefulMethods.enterValue(usernameField, Constants.STANDARD_USER);
 
         UsefulMethods.makeScreeshot(driver);
 
-        WebElement passwordField = UsefulMethods.findPasswordField(driver);
-        UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+        WebElement passwordField = UsefulMethods.findByPlaceholder(driver,"Password");
+        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
 
         UsefulMethods.makeScreeshot(driver);
 
@@ -61,13 +56,13 @@ public class Authorization_AT {
     @Tags({@Tag("Authorization"), @Tag("Smoke"), @Tag("Security_matrix"), @Tag("Negative")})
     public void unsuccessfulAuthorization() throws IOException {
 
-        WebElement usernameField = UsefulMethods.findUsernameField(driver);
-        UsefulMethods.enterUsername(usernameField, Constants.LOCKED_OUT_USER);
+        WebElement usernameField = UsefulMethods.findByPlaceholder(driver, "Username");
+        UsefulMethods.enterValue(usernameField, Constants.LOCKED_OUT_USER);
 
         UsefulMethods.makeScreeshot(driver);
 
-        WebElement passwordField = UsefulMethods.findPasswordField(driver);
-        UsefulMethods.enterPassword(passwordField, Constants.PASSWORD);
+        WebElement passwordField = UsefulMethods.findByPlaceholder(driver, "Password");
+        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
 
         UsefulMethods.makeScreeshot(driver);
 
@@ -81,7 +76,7 @@ public class Authorization_AT {
         //WebElement errorMessage = driver.findElement(By.xpath("//div[@class='error-message-container error']"));
         String actualBackgroundErrorMessage = errorMessage.getCssValue("background-color");
 
-        usernameField = UsefulMethods.findUsernameField(driver);
+        usernameField = UsefulMethods.findByPlaceholder(driver, "Username");
         String actualBorderUsername = usernameField.getCssValue("border-bottom-color");
 
         passwordField = driver.findElement(By.xpath("//input[@placeholder='Password']"));

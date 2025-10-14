@@ -1,20 +1,18 @@
 package helpers;
 
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Objects;
 
 import static io.qameta.allure.Allure.step;
 
@@ -39,24 +37,17 @@ public class UsefulMethods {
         }
     }
 
-    public static WebElement findUsernameField(WebDriver driver) {
-        return driver.findElement(By.xpath("//input[@placeholder='Username']"));
-    }
-
-    public static WebElement findPasswordField(WebDriver driver) {
-        return driver.findElement(By.xpath("//input[@placeholder='Password']"));
+    public static WebElement findByPlaceholder(WebDriver driver, String placeholderName) {
+        return driver.findElement(By.xpath("//input[@placeholder='" + placeholderName + "']"));
     }
 
     public static WebElement findLoginButton(WebDriver driver) {
         return driver.findElement(By.xpath("//input[@value='Login']"));
     }
 
-    public static void enterUsername(WebElement usernameField, String username) {
-        step("Ввести username = " + username, () -> usernameField.sendKeys(username));
-    }
-
-    public static void enterPassword(WebElement passwordField, String password) {
-        step("Ввести password = " + password, () -> passwordField.sendKeys(password));
+    public static void enterValue(WebElement webElement, String fieldName) {
+        if (Objects.equals(fieldName, Constants.PASSWORD)) step("Ввести пароль = " + fieldName, () -> webElement.sendKeys(fieldName));
+        else step("Ввести логин = " + fieldName, () -> webElement.sendKeys(fieldName));
     }
 
     public static void clickLogin(WebElement loginButton) {
