@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"a3041b80a1f145a318ad14112dc88ba3","name":"BS-SM-01 Security matrix","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}},{"uid":"58602b4903bed3453fbac545821b0d80","name":"BS-E2E-01 Add to Cart","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}

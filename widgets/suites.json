@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"fc40941b12e14c293fca01534c0aabe4","name":"Authorization_AT","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}},{"uid":"24f3409d654722d7dc9d7c63892fc0d5","name":"E2E_AT","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}
