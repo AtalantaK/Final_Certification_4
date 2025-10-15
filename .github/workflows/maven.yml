@@ -39,11 +39,26 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
           allure --version
 
+      # Сохраняем историю из предыдущего отчёта
+      - name: Download previous Allure history
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: target/allure-results/history
+        continue-on-error: true  # если истории ещё нет — не падаем
+
         # Генерация HTML-отчета из результатов
       - name: Generate Allure HTML report
         run: |
           ls -la target/allure-results
           allure generate target/allure-results --clean -o target/allure-report
+
+      # Загружаем папку history из отчёта как артефакт, чтобы использовать в следующий раз
+      - name: Upload Allure history
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: target/allure-report/history
 
         # Загрузка отчета как артефакт
       - name: Upload Allure report
@@ -52,6 +67,7 @@ jobs:
           name: allure-report
           path: target/allure-report
 
+      # Публикация Allure отчета в Github Pages
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
