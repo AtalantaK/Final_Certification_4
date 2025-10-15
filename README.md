@@ -1,4 +1,7 @@
 [![Maven CI](https://github.com/AtalantaK/Final_Certification_4/actions/workflows/maven.yml/badge.svg)](https://github.com/AtalantaK/Final_Certification_4/actions/workflows/maven.yml)
+
+Allure отчет вы можете посмотреть здесь: https://atalantak.github.io/Final_Certification_4/
+
 <h1> Промежуточная аттестация 4</h1> 
 <h3> Напишите автотесты на сервис https://www.saucedemo.com </h3>
 <h3> Сценарии:</h3>
