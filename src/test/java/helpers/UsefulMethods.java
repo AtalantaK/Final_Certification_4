@@ -1,6 +1,7 @@
 package helpers;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -54,8 +55,9 @@ public class UsefulMethods {
         else step("Ввести логин = " + fieldName, () -> webElement.sendKeys(fieldName));
     }
 
+    @Step("Нажать на кнопку 'Login'")
     public static void clickLogin(WebElement loginButton) {
-        step("Нажать на кнопку 'Login'", () -> loginButton.click());
+        loginButton.click();
     }
 
     public static WebElement findItemByName(WebDriver driver, String itemName) {
@@ -71,6 +73,7 @@ public class UsefulMethods {
         driver.findElement(By.xpath("//button[@name='" + buttonName + "']")).click();
     }
 
+    @Step("Скриншот")
     public static void makeScreeshot(WebDriver driver) throws IOException {
         Screenshot screenshot = new AShot().takeScreenshot(driver);
         //ImageIO.write(screenshot.getImage(), "PNG", new File("src/test/java/screenshots/" + screenshotName + "_AR.png"));
@@ -80,6 +83,6 @@ public class UsefulMethods {
         byte[] screenshotBytes = baos.toByteArray();
 
         // Прикрепляем скриншот к Allure отчету
-        step("Скриншот", () -> Allure.addAttachment("Актуальный результат", "image/png", new ByteArrayInputStream(screenshotBytes), ".png"));
+        Allure.addAttachment("Актуальный результат", "image/png", new ByteArrayInputStream(screenshotBytes), ".png");
     }
 }
