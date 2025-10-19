@@ -28,7 +28,7 @@ public class UsefulMethods {
 
         WebDriver driver = new EdgeDriver(options);
         driver.manage().window().setPosition(new Point(0, 0));
-        driver.get(Constants.URL);
+        driver.get(Config.get("URL"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
@@ -50,7 +50,7 @@ public class UsefulMethods {
     }
 
     public static void enterValue(WebElement webElement, String fieldName) {
-        if (Objects.equals(fieldName, Constants.PASSWORD))
+        if (Objects.equals(fieldName, Config.get("PASSWORD")))
             step("Ввести пароль = " + fieldName, () -> webElement.sendKeys(fieldName));
         else step("Ввести логин = " + fieldName, () -> webElement.sendKeys(fieldName));
     }

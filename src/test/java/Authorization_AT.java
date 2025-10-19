@@ -1,3 +1,4 @@
+import helpers.Config;
 import helpers.Constants;
 import helpers.UsefulMethods;
 import io.qameta.allure.Description;
@@ -35,7 +36,7 @@ public class Authorization_AT {
         UsefulMethods.makeScreeshot(driver);
 
         WebElement passwordField = UsefulMethods.findByPlaceholder(driver,"Password");
-        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
+        UsefulMethods.enterValue(passwordField, Config.get("PASSWORD"));
 
         UsefulMethods.makeScreeshot(driver);
 
@@ -62,7 +63,7 @@ public class Authorization_AT {
         UsefulMethods.makeScreeshot(driver);
 
         WebElement passwordField = UsefulMethods.findByPlaceholder(driver, "Password");
-        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
+        UsefulMethods.enterValue(passwordField, Config.get("PASSWORD"));
 
         UsefulMethods.makeScreeshot(driver);
 

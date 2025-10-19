@@ -1,3 +1,4 @@
+import helpers.Config;
 import helpers.Constants;
 import helpers.UsefulMethods;
 import io.qameta.allure.Description;
@@ -26,6 +27,7 @@ public class E2E_AT {
     @BeforeEach
     public void setUp() {
         driver = UsefulMethods.driverSetUp();
+
     }
 
     @ParameterizedTest
@@ -41,7 +43,7 @@ public class E2E_AT {
         UsefulMethods.makeScreeshot(driver);
 
         WebElement passwordField = UsefulMethods.findByPlaceholder(driver, "Password");
-        UsefulMethods.enterValue(passwordField, Constants.PASSWORD);
+        UsefulMethods.enterValue(passwordField, Config.get("PASSWORD"));
 
         UsefulMethods.makeScreeshot(driver);
 
